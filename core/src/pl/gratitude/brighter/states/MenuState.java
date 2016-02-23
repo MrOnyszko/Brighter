@@ -1,6 +1,9 @@
 package pl.gratitude.brighter.states;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 import pl.gratitude.brighter.utils.GameStateManager;
+import pl.gratitude.brighter.utils.Util;
 
 /**
  * Created on 23.02.2016
@@ -26,6 +29,10 @@ public class MenuState extends BaseState {
     @Override
     public void render() {
         super.render();
+        sr.setColor(Util.hexToRGBA("#445FCCAA"));
+        sr.begin(ShapeRenderer.ShapeType.Filled);
+        sr.circle(300, 400, 50);
+        sr.end();
     }
 
     @Override
