@@ -59,8 +59,8 @@ public abstract class BaseState implements StateInterface {
         sr = new ShapeRenderer();
 
         density = Gdx.graphics.getDensity();
-        cx = Main.SCREEN_WIDTH / 2;
-        cy = Main.SCREEN_HEIGHT / 2;
+        cx = Main.getInstance().getScreenWidth() / 2;
+        cy = Main.getInstance().getScreenHeight() / 2;
 
         virtualCenterX = Dictionary.VIRTUAL_WIDTH / 2;
         virtualCenterY = Dictionary.VIRTUAL_HEIGHT / 2;
