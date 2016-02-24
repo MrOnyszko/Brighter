@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import pl.gratitude.brighter.Main;
 import pl.gratitude.brighter.interfaces.StateInterface;
+import pl.gratitude.brighter.utils.Dictionary;
 import pl.gratitude.brighter.utils.GameStateManager;
 
 /**
@@ -20,6 +21,8 @@ import pl.gratitude.brighter.utils.GameStateManager;
  * @author Sławomir Onyszko
  */
 public abstract class BaseState implements StateInterface {
+
+    private static final String TAG = BaseState.class.getSimpleName();
 
     protected GameStateManager gsm;
     protected Vector3 touch;
@@ -36,24 +39,31 @@ public abstract class BaseState implements StateInterface {
     protected float cx;
     protected float cy;
 
+    protected int virtualCenterX;
+    protected int virtualCenterY;
 
     protected BaseState(GameStateManager gsm) {
         this.gsm = gsm;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Main.V_WIDTH, Main.V_HEIGHT);
+        camera.setToOrtho(false, Dictionary.VIRTUAL_WIDTH, Dictionary.VIRTUAL_HEIGHT);
 
-        viewport = new ExtendViewport(Main.V_WIDTH, Main.V_HEIGHT, camera);
+        viewport = new ExtendViewport(Dictionary.VIRTUAL_WIDTH, Dictionary.VIRTUAL_HEIGHT, camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
+
+        font = new BitmapFont();
 
         touch = new Vector3();
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
 
         density = Gdx.graphics.getDensity();
-        cx = Main.S_WIDTH / 2;
-        cy = Main.S_HEIGHT / 2;
+        cx = Main.SCREEN_WIDTH / 2;
+        cy = Main.SCREEN_HEIGHT / 2;
+
+        virtualCenterX = Dictionary.VIRTUAL_WIDTH / 2;
+        virtualCenterY = Dictionary.VIRTUAL_HEIGHT / 2;
 
     }
 
@@ -81,5 +91,6 @@ public abstract class BaseState implements StateInterface {
         sb.dispose();
         sr.dispose();
         font.dispose();
+        Gdx.app.log(TAG, "Dispose");
     }
 }

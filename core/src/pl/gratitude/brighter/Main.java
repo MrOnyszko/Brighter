@@ -4,29 +4,24 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
+import pl.gratitude.brighter.states.MenuState;
 import pl.gratitude.brighter.utils.GameStateManager;
 
 public class Main extends ApplicationAdapter {
 
     private GameStateManager mGSM;
 
-    public static final int V_WIDTH = 480;
-    public static final int V_HEIGHT = 800;
-    public static int S_WIDTH;
-    public static int S_HEIGHT;
-
-    public static int virtualCenterWidth;
-    public static int virtualCenterHeight;
+    public static int SCREEN_WIDTH;
+    public static int SCREEN_HEIGHT;
 
 	@Override
 	public void create () {
-        mGSM = new pl.gratitude.brighter.utils.GameStateManager();
-        mGSM.push(new pl.gratitude.brighter.states.MenuState(mGSM));
 
-        S_WIDTH = Gdx.graphics.getWidth();
-        S_HEIGHT = Gdx.graphics.getHeight();
-        virtualCenterWidth = V_WIDTH / 2;
-        virtualCenterHeight = V_HEIGHT / 2;
+        SCREEN_WIDTH = Gdx.graphics.getWidth();
+        SCREEN_HEIGHT = Gdx.graphics.getHeight();
+
+        mGSM = new GameStateManager();
+        mGSM.push(new MenuState(mGSM));
 
 	}
 

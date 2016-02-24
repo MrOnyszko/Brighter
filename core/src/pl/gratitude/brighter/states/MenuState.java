@@ -1,5 +1,6 @@
 package pl.gratitude.brighter.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import pl.gratitude.brighter.utils.GameStateManager;
@@ -11,6 +12,8 @@ import pl.gratitude.brighter.utils.Util;
  * @author Sławomir Onyszko
  */
 public class MenuState extends BaseState {
+
+    private static final String TAG = MenuState.class.getSimpleName();
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
@@ -31,12 +34,13 @@ public class MenuState extends BaseState {
         super.render();
         sr.setColor(Util.hexToRGBA("#445FCCAA"));
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.circle(300, 400, 50);
+        sr.circle(virtualCenterX, virtualCenterY, 50);
         sr.end();
     }
 
     @Override
     public void dispose() {
         super.dispose();
+        Gdx.app.log(TAG, "Dispose");
     }
 }
