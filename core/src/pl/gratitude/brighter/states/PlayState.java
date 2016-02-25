@@ -9,35 +9,30 @@ import pl.gratitude.brighter.utils.Dictionary;
 import pl.gratitude.brighter.utils.GameStateManager;
 
 /**
- * Created on 23.02.2016
+ * Created on 25.02.2016
  *
  * @author Sławomir Onyszko
  */
-public class MenuState extends BaseState {
+public class PlayState extends BaseState {
 
-    /**
-     * Log tag.
-     */
-    private static final String TAG = MenuState.class.getSimpleName();
+    private Button button;
 
-    private Button play;
-
-    public MenuState(GameStateManager gsm) {
+    public PlayState(GameStateManager gsm) {
         super(gsm);
     }
 
     @Override
     public void create() {
-        play = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.RESOURCES_BUTTONS, Dictionary.Button.PLAY), virtualCenterX, virtualCenterY);
-        play.addListener(new ClickListener() {
+        button = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.RESOURCES_BUTTONS, Dictionary.Button.BACK), virtualCenterX, virtualCenterY);
+        button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                mGSM.set(new PlayState(mGSM));
+                mGSM.set(new MenuState(mGSM));
             }
         });
 
-        stage.addActor(play);
+        stage.addActor(button);
     }
 
     @Override

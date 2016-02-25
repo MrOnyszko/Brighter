@@ -14,6 +14,6 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useCompass = false;
 		config.useImmersiveMode = false;
 		config.hideStatusBar = false;
-		initialize(new Main(), config);
+		initialize(Main.getInstance(), config);
 	}
 }

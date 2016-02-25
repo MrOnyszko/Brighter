@@ -8,6 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.HashMap;
 
 /**
+ * This class handles texture atlases for resources created from texturepacker.
+ * <p/>
+ * {@see https://www.codeandweb.com/}
+ * {@link TextureAtlas}
+ * <p/>
  * Created on 23.02.2016
  *
  * @author Sławomir Onyszko

@@ -18,4 +18,17 @@ public class Dictionary {
     public static final int VIRTUAL_HEIGHT = 800;
     public static final int TILE_SPACING = 8;
 
+    public static class Button {
+        public static final String BACK = "back";
+        public static final String PLAY = "play";
+        public static final String RELOAD = "reload";
+        public static final String WHITE_BOX = "whitebox";
+    }
+
+    public static class Icon {
+        public static final String DIAMOND = "diamond";
+        public static final String FAIL = "fail";
+        public static final String TIMER = "timer";
+    }
+
 }

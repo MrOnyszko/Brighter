@@ -1,12 +1,14 @@
 package pl.gratitude.brighter.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -24,7 +26,7 @@ public abstract class BaseState implements StateInterface {
 
     private static final String TAG = BaseState.class.getSimpleName();
 
-    protected GameStateManager gsm;
+    protected GameStateManager mGSM;
     protected Vector3 touch;
 
     protected BitmapFont font;
@@ -43,7 +45,7 @@ public abstract class BaseState implements StateInterface {
     protected int virtualCenterY;
 
     protected BaseState(GameStateManager gsm) {
-        this.gsm = gsm;
+        this.mGSM = gsm;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Dictionary.VIRTUAL_WIDTH, Dictionary.VIRTUAL_HEIGHT);
@@ -65,7 +67,10 @@ public abstract class BaseState implements StateInterface {
         virtualCenterX = Dictionary.VIRTUAL_WIDTH / 2;
         virtualCenterY = Dictionary.VIRTUAL_HEIGHT / 2;
 
+        create();
     }
+
+    public abstract void create();
 
     @Override
     public void resize(int width, int height) {
@@ -91,6 +96,5 @@ public abstract class BaseState implements StateInterface {
         sb.dispose();
         sr.dispose();
         font.dispose();
-        Gdx.app.log(TAG, "Dispose");
     }
 }
