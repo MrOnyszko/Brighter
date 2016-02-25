@@ -1,5 +1,6 @@
 package pl.gratitude.brighter.entities;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import pl.gratitude.brighter.utils.Dictionary;
@@ -26,38 +27,6 @@ public class Tile {
         this.height = height - Dictionary.TILE_SPACING;
     }
 
-    public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
     public boolean isBrighter() {
         return brighter;
     }
@@ -80,5 +49,45 @@ public class Tile {
 
     public void setLight(TextureRegion light) {
         this.light = light;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width - 8;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height - 8;
+    }
+
+    public void render(SpriteBatch sb) {
+        if (brighter) {
+            sb.draw(light, x - (width / 2), y - (height / 2), width, height);
+        } else {
+            sb.draw(normal, x - (width / 2), y - (height / 2), width, height);
+        }
     }
 }
