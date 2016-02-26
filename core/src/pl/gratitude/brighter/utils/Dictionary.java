@@ -10,8 +10,25 @@ package pl.gratitude.brighter.utils;
 public class Dictionary {
 
     public static final String GAME_TITLE = "Brighter";
+    public static final String RESOURCES_ICONS = "icons";
+    public static final String RESOURCES_BUTTONS = "buttons";
+    public static final String TILE_SPRITES_DIRECTORY = "tilesprites";
+    public static final String TEXT_EXTENSION = ".txt";
     public static final int VIRTUAL_WIDTH = 480;
     public static final int VIRTUAL_HEIGHT = 800;
     public static final int TILE_SPACING = 8;
+
+    public static class Button {
+        public static final String BACK = "back";
+        public static final String PLAY = "play";
+        public static final String RELOAD = "reload";
+        public static final String WHITE_BOX = "whitebox";
+    }
+
+    public static class Icon {
+        public static final String DIAMOND = "diamond";
+        public static final String FAIL = "fail";
+        public static final String TIMER = "timer";
+    }
 
 }

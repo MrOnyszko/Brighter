@@ -12,6 +12,6 @@ public class DesktopLauncher {
         config.title = Dictionary.GAME_TITLE;
         config.width = Dictionary.VIRTUAL_WIDTH;
         config.height = Dictionary.VIRTUAL_HEIGHT;
-        new LwjglApplication(new Main(), config);
+        new LwjglApplication(Main.getInstance(), config);
     }
 }
