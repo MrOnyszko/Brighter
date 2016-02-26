@@ -79,6 +79,7 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         mGSM.update(Gdx.graphics.getDeltaTime());
         mGSM.render();
+        Gdx.graphics.setTitle(Dictionary.GAME_TITLE + " | FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 
     @Override
