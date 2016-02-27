@@ -81,13 +81,11 @@ public abstract class BaseState implements StateInterface {
     @Override
     public void update(float dt) {
         stage.act(dt);
-        touch.set(Gdx.input.getX(), Gdx.input.getY(), 0f);
     }
 
     @Override
     public void render() {
         stage.draw();
-        camera.unproject(touch);
     }
 
     @Override
