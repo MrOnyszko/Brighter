@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -54,7 +55,10 @@ public abstract class BaseState implements StateInterface {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        font = new BitmapFont();
+        FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ubuntu-regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        font = fontGenerator.generateFont(fontParameter);
+        fontGenerator.dispose();
 
         touch = new Vector3();
         sb = new SpriteBatch();
@@ -74,7 +78,6 @@ public abstract class BaseState implements StateInterface {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
         stage.getViewport().update(width, height);
     }
 

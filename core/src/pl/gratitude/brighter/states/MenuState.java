@@ -1,10 +1,13 @@
 package pl.gratitude.brighter.states;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 
 import pl.gratitude.brighter.Main;
 import pl.gratitude.brighter.gui.Button;
+import pl.gratitude.brighter.gui.Label;
 import pl.gratitude.brighter.utils.Dictionary;
 import pl.gratitude.brighter.utils.GameStateManager;
 
@@ -21,6 +24,7 @@ public class MenuState extends BaseState {
     private static final String TAG = MenuState.class.getSimpleName();
 
     private Button play;
+    private Label title;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
@@ -28,6 +32,14 @@ public class MenuState extends BaseState {
 
     @Override
     public void create() {
+
+        title = new Label(Dictionary.GAME_TITLE, new Label.LabelStyle(font, Color.WHITE));
+        title.setAlignment(Align.center);
+        title.setFontScale(8 * density);
+        title.setBounds(0, virtualCenterY, Dictionary.VIRTUAL_WIDTH, Dictionary.VIRTUAL_HEIGHT / 2);
+
+        title.setDebug(true);
+
         play = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.RESOURCES_BUTTONS, Dictionary.Button.PLAY), virtualCenterX, virtualCenterY);
         play.addListener(new ClickListener() {
             @Override
@@ -38,6 +50,7 @@ public class MenuState extends BaseState {
         });
 
         stage.addActor(play);
+        stage.addActor(title);
     }
 
     @Override
