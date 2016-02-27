@@ -18,7 +18,7 @@ public class PlayState extends BaseState {
 
     private static final String TAG = PlayState.class.getSimpleName();
 
-    private Timer timer;
+    private Timer.Task timerTask;
     private Tile[][] tiles;
 
     private final int maxElements = 10;
@@ -60,13 +60,13 @@ public class PlayState extends BaseState {
         createBoard(numRows, numCols);
         colorBoard(numRows, numCols);
 
-        timer = new Timer();
-        Timer.schedule(new Timer.Task() {
+        timerTask = new Timer.Task() {
             @Override
             public void run() {
                 if (stopTimer) levelTime--;
             }
-        }, 1, 1 / 2f);
+        };
+        Timer.schedule(timerTask, 1, 1 / 2f);
 
     }
 
@@ -118,6 +118,7 @@ public class PlayState extends BaseState {
         if (Gdx.input.justTouched()) {
             touch.x = Gdx.input.getX(); 
             touch.y = Gdx.input.getY(); 
+            camera.unproject(touch);
 
             if (touch.x > 0 && touch.x < Dictionary.VIRTUAL_WIDTH && touch.y > boardOffset && touch.y < boardOffset + boardHeight) {
                 int row = (int) ((touch.y - boardOffset) / tileSize); 
@@ -198,7 +199,6 @@ public class PlayState extends BaseState {
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
                 tiles[row][col].render(sb);
-                Gdx.app.log(TAG, tiles[row][col].isBrighter() + " " + row + " x " + col);
             }
         }
         sb.end();
