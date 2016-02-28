@@ -9,9 +9,9 @@ import pl.gratitude.brighter.utils.Dictionary;
 public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.title = Dictionary.GAME_TITLE;
-        config.width = Dictionary.VIRTUAL_WIDTH;
-        config.height = Dictionary.VIRTUAL_HEIGHT;
+        config.title = Dictionary.Labels.GAME_TITLE;
+        config.width = Dictionary.Dimensions.VIRTUAL_WIDTH;
+        config.height = Dictionary.Dimensions.VIRTUAL_HEIGHT;
         config.resizable = false;
         new LwjglApplication(Main.getInstance(), config);
     }

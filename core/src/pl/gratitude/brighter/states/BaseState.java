@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import pl.gratitude.brighter.Main;
-import pl.gratitude.brighter.gui.Label;
 import pl.gratitude.brighter.interfaces.StateInterface;
 import pl.gratitude.brighter.utils.Dictionary;
 import pl.gratitude.brighter.utils.GameStateManager;
@@ -51,9 +51,9 @@ public abstract class BaseState implements StateInterface {
         this.mGSM = gsm;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Dictionary.VIRTUAL_WIDTH, Dictionary.VIRTUAL_HEIGHT);
+        camera.setToOrtho(false, Dictionary.Dimensions.VIRTUAL_WIDTH, Dictionary.Dimensions.VIRTUAL_HEIGHT);
 
-        viewport = new ExtendViewport(Dictionary.VIRTUAL_WIDTH, Dictionary.VIRTUAL_HEIGHT, camera);
+        viewport = new ExtendViewport(Dictionary.Dimensions.VIRTUAL_WIDTH, Dictionary.Dimensions.VIRTUAL_HEIGHT, camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
@@ -70,10 +70,9 @@ public abstract class BaseState implements StateInterface {
         cx = Main.getInstance().getScreenWidth() / 2;
         cy = Main.getInstance().getScreenHeight() / 2;
 
-        virtualCenterX = Dictionary.VIRTUAL_WIDTH / 2;
-        virtualCenterY = Dictionary.VIRTUAL_HEIGHT / 2;
+        virtualCenterX = Dictionary.Dimensions.VIRTUAL_WIDTH / 2;
+        virtualCenterY = Dictionary.Dimensions.VIRTUAL_HEIGHT / 2;
 
-        create();
     }
 
     public Label createLabel(String text, int fontSize, float x, float y, Color color) {
@@ -93,8 +92,6 @@ public abstract class BaseState implements StateInterface {
         generator.dispose(); 
         return label; 
     }
-
-    public abstract void create();
 
     @Override
     public void resize(int width, int height) {

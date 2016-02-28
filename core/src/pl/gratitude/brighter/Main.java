@@ -79,7 +79,7 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         mGSM.update(Gdx.graphics.getDeltaTime());
         mGSM.render();
-        Gdx.graphics.setTitle(Dictionary.GAME_TITLE + " | FPS: " + Gdx.graphics.getFramesPerSecond());
+        Gdx.graphics.setTitle(Dictionary.Labels.GAME_TITLE + " | FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 
     @Override
@@ -96,11 +96,11 @@ public class Main extends ApplicationAdapter {
         try {
             userInterfaceResource = new AssetsHandler<String>();
             tilesResource = new AssetsHandler<Integer>();
-            userInterfaceResource.loadAtlas(Dictionary.RESOURCES_BUTTONS, Dictionary.RESOURCES_BUTTONS + File.separator + Dictionary.RESOURCES_BUTTONS + Dictionary.TEXT_EXTENSION);
-            userInterfaceResource.loadAtlas(Dictionary.RESOURCES_ICONS, Dictionary.RESOURCES_ICONS + File.separator + Dictionary.RESOURCES_ICONS + Dictionary.TEXT_EXTENSION);
+            userInterfaceResource.loadAtlas(Dictionary.Resources.RESOURCES_BUTTONS, Dictionary.Resources.RESOURCES_BUTTONS + File.separator + Dictionary.Resources.RESOURCES_BUTTONS + Dictionary.Resources.TEXT_EXTENSION);
+            userInterfaceResource.loadAtlas(Dictionary.Resources.RESOURCES_ICONS, Dictionary.Resources.RESOURCES_ICONS + File.separator + Dictionary.Resources.RESOURCES_ICONS + Dictionary.Resources.TEXT_EXTENSION);
             for (int i = 1; i <= 9; i++) {
-                tilesResource.loadAtlas(i, Dictionary.TILE_SPRITES_DIRECTORY + File.separator + i + Dictionary.TEXT_EXTENSION);
-                Gdx.app.log(TAG, "Loaded: " + Dictionary.TILE_SPRITES_DIRECTORY + File.separator + i + Dictionary.TEXT_EXTENSION);
+                tilesResource.loadAtlas(i, Dictionary.Resources.TILE_SPRITES_DIRECTORY + File.separator + i + Dictionary.Resources.TEXT_EXTENSION);
+                Gdx.app.log(TAG, "Loaded: " + Dictionary.Resources.TILE_SPRITES_DIRECTORY + File.separator + i + Dictionary.Resources.TEXT_EXTENSION);
             }
         } catch (Exception e) {
             Gdx.app.log(TAG, e.getMessage(), e);
@@ -112,11 +112,11 @@ public class Main extends ApplicationAdapter {
      */
     private void disposeResources() {
         try {
-            userInterfaceResource.getAtlas(Dictionary.RESOURCES_BUTTONS).dispose();
-            userInterfaceResource.getAtlas(Dictionary.RESOURCES_ICONS).dispose();
+            userInterfaceResource.getAtlas(Dictionary.Resources.RESOURCES_BUTTONS).dispose();
+            userInterfaceResource.getAtlas(Dictionary.Resources.RESOURCES_ICONS).dispose();
             for (int i = 1; i <= 9; i++) {
                 tilesResource.getAtlas(i).dispose();
-                Gdx.app.log(TAG, "Disposed: " + Dictionary.TILE_SPRITES_DIRECTORY + File.separator + i + Dictionary.TEXT_EXTENSION);
+                Gdx.app.log(TAG, "Disposed: " + Dictionary.Resources.TILE_SPRITES_DIRECTORY + File.separator + i + Dictionary.Resources.TEXT_EXTENSION);
             }
         } catch (Exception e) {
             Gdx.app.log(TAG, e.getMessage(), e);
