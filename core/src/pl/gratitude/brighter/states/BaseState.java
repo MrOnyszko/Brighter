@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import pl.gratitude.brighter.Main;
+import pl.gratitude.brighter.gui.Label;
 import pl.gratitude.brighter.interfaces.StateInterface;
 import pl.gratitude.brighter.utils.Dictionary;
 import pl.gratitude.brighter.utils.GameStateManager;
@@ -39,6 +39,8 @@ public abstract class BaseState implements StateInterface {
     protected OrthographicCamera camera;
 
     protected float density;
+    protected float fontWidth;
+    protected float fontHeight;
     protected float cx;
     protected float cy;
 
@@ -72,6 +74,24 @@ public abstract class BaseState implements StateInterface {
         virtualCenterY = Dictionary.VIRTUAL_HEIGHT / 2;
 
         create();
+    }
+
+    public Label createLabel(String text, int fontSize, float x, float y, Color color) {
+
+        density = density >= 3.0 ? 1.5f : 2f; 
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ubuntu-regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter(); 
+        parameter.size = Math.round(fontSize * density);
+        font = generator.generateFont(parameter);
+        Label label = new Label(text, new Label.LabelStyle(font, color));
+        label.getGlyphLayout().setText(font, text);
+
+        fontWidth = label.getGlyphLayout().width;
+        fontHeight = label.getGlyphLayout().height;
+        label.setPosition((int) (x - (fontWidth / 2)), (int) (y - (fontHeight / 2))); 
+        generator.dispose(); 
+        return label; 
     }
 
     public abstract void create();

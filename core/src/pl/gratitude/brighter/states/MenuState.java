@@ -3,7 +3,6 @@ package pl.gratitude.brighter.states;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 
 import pl.gratitude.brighter.Main;
 import pl.gratitude.brighter.gui.Button;
@@ -18,13 +17,7 @@ import pl.gratitude.brighter.utils.GameStateManager;
  */
 public class MenuState extends BaseState {
 
-    /**
-     * Log tag.
-     */
     private static final String TAG = MenuState.class.getSimpleName();
-
-    private Button play;
-    private Label title;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
@@ -33,14 +26,14 @@ public class MenuState extends BaseState {
     @Override
     public void create() {
 
-        title = new Label(Dictionary.GAME_TITLE, new Label.LabelStyle(font, Color.WHITE));
-        title.setAlignment(Align.center);
-        title.setFontScale(8 * density);
-        title.setBounds(0, virtualCenterY, Dictionary.VIRTUAL_WIDTH, Dictionary.VIRTUAL_HEIGHT / 2);
+        Label label = createLabel(Dictionary.GAME_TITLE, 50, virtualCenterX, Dictionary.VIRTUAL_HEIGHT - 230, Color.WHITE);
 
-        title.setDebug(true);
+        Button whiteBoxTop = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.RESOURCES_BUTTONS, Dictionary.Button.WHITE_BOX), virtualCenterX, virtualCenterY);
+        Button play = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.RESOURCES_BUTTONS, Dictionary.Button.PLAY), virtualCenterX, whiteBoxTop.getY() - (whiteBoxTop.getHeight() / 2));
+        Button whiteBoxRight = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.RESOURCES_BUTTONS, Dictionary.Button.WHITE_BOX), virtualCenterX + 100, whiteBoxTop.getY() - (whiteBoxTop.getHeight() / 2));
+        Button whiteBoxLeft = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.RESOURCES_BUTTONS, Dictionary.Button.WHITE_BOX), virtualCenterX - 100, whiteBoxTop.getY() - (whiteBoxTop.getHeight() / 2));
+        Button whiteBoxBot = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.RESOURCES_BUTTONS, Dictionary.Button.WHITE_BOX), virtualCenterX, whiteBoxLeft.getY() - (whiteBoxLeft.getHeight() / 2));
 
-        play = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.RESOURCES_BUTTONS, Dictionary.Button.PLAY), virtualCenterX, virtualCenterY);
         play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -49,8 +42,12 @@ public class MenuState extends BaseState {
             }
         });
 
+        stage.addActor(label);
+        stage.addActor(whiteBoxTop);
+        stage.addActor(whiteBoxBot);
+        stage.addActor(whiteBoxRight);
+        stage.addActor(whiteBoxLeft);
         stage.addActor(play);
-        stage.addActor(title);
     }
 
     @Override
