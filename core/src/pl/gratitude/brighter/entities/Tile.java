@@ -23,8 +23,8 @@ public class Tile {
     public Tile(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
-        this.width = width - Dictionary.TILE_SPACING;
-        this.height = height - Dictionary.TILE_SPACING;
+        this.width = width - Dictionary.Dimensions.TILE_SPACING;
+        this.height = height - Dictionary.Dimensions.TILE_SPACING;
     }
 
     public boolean isBrighter() {

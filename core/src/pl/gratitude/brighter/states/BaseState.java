@@ -39,6 +39,8 @@ public abstract class BaseState implements StateInterface {
     protected OrthographicCamera camera;
 
     protected float density;
+    protected float fontWidth;
+    protected float fontHeight;
     protected float cx;
     protected float cy;
 
@@ -49,9 +51,9 @@ public abstract class BaseState implements StateInterface {
         this.mGSM = gsm;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Dictionary.VIRTUAL_WIDTH, Dictionary.VIRTUAL_HEIGHT);
+        camera.setToOrtho(false, Dictionary.Dimensions.VIRTUAL_WIDTH, Dictionary.Dimensions.VIRTUAL_HEIGHT);
 
-        viewport = new ExtendViewport(Dictionary.VIRTUAL_WIDTH, Dictionary.VIRTUAL_HEIGHT, camera);
+        viewport = new ExtendViewport(Dictionary.Dimensions.VIRTUAL_WIDTH, Dictionary.Dimensions.VIRTUAL_HEIGHT, camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
@@ -68,13 +70,28 @@ public abstract class BaseState implements StateInterface {
         cx = Main.getInstance().getScreenWidth() / 2;
         cy = Main.getInstance().getScreenHeight() / 2;
 
-        virtualCenterX = Dictionary.VIRTUAL_WIDTH / 2;
-        virtualCenterY = Dictionary.VIRTUAL_HEIGHT / 2;
+        virtualCenterX = Dictionary.Dimensions.VIRTUAL_WIDTH / 2;
+        virtualCenterY = Dictionary.Dimensions.VIRTUAL_HEIGHT / 2;
 
-        create();
     }
 
-    public abstract void create();
+    public Label createLabel(String text, int fontSize, float x, float y, Color color) {
+
+        density = density >= 3.0 ? 1.5f : 2f; 
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ubuntu-regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter(); 
+        parameter.size = Math.round(fontSize * density);
+        font = generator.generateFont(parameter);
+        Label label = new Label(text, new Label.LabelStyle(font, color));
+        label.getGlyphLayout().setText(font, text);
+
+        fontWidth = label.getGlyphLayout().width;
+        fontHeight = label.getGlyphLayout().height;
+        label.setPosition((int) (x - (fontWidth / 2)), (int) (y - (fontHeight / 2))); 
+        generator.dispose(); 
+        return label; 
+    }
 
     @Override
     public void resize(int width, int height) {

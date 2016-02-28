@@ -44,10 +44,10 @@ public class PlayState extends BaseState {
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
+        create();
     }
 
-    @Override
-    public void create() {
+    private void create() {
 
         normalLevel = 9;
         lightLevel = 8;
@@ -85,9 +85,9 @@ public class PlayState extends BaseState {
     }
 
     private void createBoard(int numRows, int numCols) {
-        tileSize = Dictionary.VIRTUAL_WIDTH / numCols;
+        tileSize = Dictionary.Dimensions.VIRTUAL_WIDTH / numCols;
         boardHeight = tileSize * numRows;
-        boardOffset = (Dictionary.VIRTUAL_HEIGHT - boardHeight) / 2; 
+        boardOffset = (Dictionary.Dimensions.VIRTUAL_HEIGHT - boardHeight) / 2;
 
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
@@ -120,7 +120,7 @@ public class PlayState extends BaseState {
             touch.y = Gdx.input.getY(); 
             camera.unproject(touch);
 
-            if (touch.x > 0 && touch.x < Dictionary.VIRTUAL_WIDTH && touch.y > boardOffset && touch.y < boardOffset + boardHeight) {
+            if (touch.x > 0 && touch.x < Dictionary.Dimensions.VIRTUAL_WIDTH && touch.y > boardOffset && touch.y < boardOffset + boardHeight) {
                 int row = (int) ((touch.y - boardOffset) / tileSize); 
                 int col = (int) (touch.x / tileSize);
 
@@ -170,7 +170,9 @@ public class PlayState extends BaseState {
     }
 
     private void done() {
-        mGSM.set(new ScoreState(mGSM));
+        ScoreState scoreState = new ScoreState(mGSM);
+        scoreState.setCurrentScore(success);
+        mGSM.set(scoreState);
         tiles = null;
     }
 
