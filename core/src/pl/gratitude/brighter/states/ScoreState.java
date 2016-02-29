@@ -29,8 +29,14 @@ public class ScoreState extends BaseState {
     private int currentScore;
     private int currentHighScore;
 
-    protected ScoreState(GameStateManager gsm) {
+    public ScoreState(GameStateManager gsm) {
         super(gsm);
+        create();
+    }
+
+    public ScoreState(GameStateManager gsm, int score) {
+        super(gsm);
+        this.currentScore = score;
         create();
     }
 
@@ -84,7 +90,7 @@ public class ScoreState extends BaseState {
 
     private void saveHighScore() {
         currentHighScore = preferences.getInteger(Dictionary.Preferences.KEY_HIGH_SCORE, 0);
-        if (currentScore > currentHighScore) {
+        if (currentScore >= currentHighScore) {
             preferences.putInteger(Dictionary.Preferences.KEY_HIGH_SCORE, currentScore);
             preferences.flush();
             highScoresLabel.setColor(Color.GREEN);

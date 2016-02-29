@@ -25,9 +25,7 @@ public class MenuState extends BaseState {
     }
 
     private void create() {
-
         Label title = createLabel(Dictionary.Labels.GAME_TITLE, 50, virtualCenterX, Dictionary.Dimensions.VIRTUAL_HEIGHT - 230, Color.WHITE);
-
         Button whiteBoxTop = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.Resources.RESOURCES_BUTTONS, Dictionary.Button.WHITE_BOX), virtualCenterX, title.getY() - 100);
         Button play = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.Resources.RESOURCES_BUTTONS, Dictionary.Button.PLAY), virtualCenterX, whiteBoxTop.getY() - (whiteBoxTop.getHeight() / 2));
         Button whiteBoxRight = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.Resources.RESOURCES_BUTTONS, Dictionary.Button.WHITE_BOX), virtualCenterX + 100, whiteBoxTop.getY() - (whiteBoxTop.getHeight() / 2));

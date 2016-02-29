@@ -64,7 +64,6 @@ public class PlayState extends BaseState {
         numRows = 2;
         numCols = 2;
 
-
         timerLabel = createLabel(Dictionary.Labels.TIMER + levelTime, 18, virtualCenterX, Dictionary.Dimensions.VIRTUAL_HEIGHT - 100, Color.WHITE);
         diamondsLabel = createLabel(String.valueOf(diamondsCount), 18, Dictionary.Dimensions.VIRTUAL_WIDTH - 40, Dictionary.Dimensions.VIRTUAL_HEIGHT - 100, Color.WHITE);
         failLabel = createLabel(String.valueOf(failsCount), 18, 40, Dictionary.Dimensions.VIRTUAL_HEIGHT - 100, Color.WHITE);
@@ -201,8 +200,7 @@ public class PlayState extends BaseState {
     }
 
     private void done() {
-        ScoreState scoreState = new ScoreState(mGSM);
-        scoreState.setCurrentScore(diamondsCount);
+        ScoreState scoreState = new ScoreState(mGSM, diamondsCount);
         mGSM.set(scoreState);
         tiles = null;
     }
