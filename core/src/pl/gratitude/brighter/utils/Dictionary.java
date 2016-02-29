@@ -15,6 +15,8 @@ public class Dictionary {
         public static final String NOW = "Now";
         public static final String BEST = "Best";
         public static final String GRATITUDE = "Gratitude";
+        public static final String INFO = "Tap to brighter color.";
+        public static final String TIMER = "00:0";
     }
 
     public static class Resources {
