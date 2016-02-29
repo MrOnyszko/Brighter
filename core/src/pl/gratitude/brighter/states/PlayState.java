@@ -1,13 +1,17 @@
 package pl.gratitude.brighter.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 
 import pl.gratitude.brighter.Main;
 import pl.gratitude.brighter.entities.Tile;
+import pl.gratitude.brighter.gui.Button;
 import pl.gratitude.brighter.utils.Dictionary;
 import pl.gratitude.brighter.utils.GameStateManager;
+import pl.gratitude.brighter.utils.Util;
 
 /**
  * Created on 25.02.2016
@@ -21,16 +25,20 @@ public class PlayState extends BaseState {
     private Timer.Task timerTask;
     private Tile[][] tiles;
 
+    private Label timerLabel;
+    private Label failLabel;
+    private Label diamondsLabel;
+
     private final int maxElements = 10;
     private final int normalMaxLevels = 6;
     private final int lightMaxLevels = normalMaxLevels - 1;
 
     private int numRows;
     private int numCols;
-    private int fail;
+    private int failsCount;
     private int step;
     private int random;
-    private int success;
+    private int diamondsCount;
     private int tileSize;
     private int levelTime;
     private int lightLevel;
@@ -56,6 +64,16 @@ public class PlayState extends BaseState {
         numRows = 2;
         numCols = 2;
 
+        timerLabel = createLabel(Dictionary.Labels.TIMER + levelTime, 18, virtualCenterX, Dictionary.Dimensions.VIRTUAL_HEIGHT - 100, Color.WHITE);
+        diamondsLabel = createLabel(String.valueOf(diamondsCount), 18, Dictionary.Dimensions.VIRTUAL_WIDTH - 40, Dictionary.Dimensions.VIRTUAL_HEIGHT - 100, Color.WHITE);
+        failLabel = createLabel(String.valueOf(failsCount), 18, 40, Dictionary.Dimensions.VIRTUAL_HEIGHT - 100, Color.WHITE);
+        Label info = createLabel(Dictionary.Labels.INFO, 16, virtualCenterX, 40, Color.WHITE);
+
+
+        Button timerIco = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.Resources.RESOURCES_ICONS, Dictionary.Icon.TIMER), virtualCenterX, Dictionary.Dimensions.VIRTUAL_HEIGHT - 40);
+        Button diamondIco = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.Resources.RESOURCES_ICONS, Dictionary.Icon.DIAMOND), Dictionary.Dimensions.VIRTUAL_WIDTH - 40, Dictionary.Dimensions.VIRTUAL_HEIGHT - 40);
+        Button failIco = new Button(Main.getInstance().getUserInterfaceResource().getSprite(Dictionary.Resources.RESOURCES_ICONS, Dictionary.Icon.FAIL), 40, Dictionary.Dimensions.VIRTUAL_HEIGHT - 40);
+
         initBoard();
         createBoard(numRows, numCols);
         colorBoard(numRows, numCols);
@@ -67,6 +85,16 @@ public class PlayState extends BaseState {
             }
         };
         Timer.schedule(timerTask, 1, 1 / 2f);
+
+
+        stage.addActor(timerIco);
+        stage.addActor(diamondIco);
+        stage.addActor(failIco);
+
+        stage.addActor(info);
+        stage.addActor(timerLabel);
+        stage.addActor(diamondsLabel);
+        stage.addActor(failLabel);
 
     }
 
@@ -116,24 +144,24 @@ public class PlayState extends BaseState {
 
     private void handleUserActions() {
         if (Gdx.input.justTouched()) {
-            touch.x = Gdx.input.getX(); 
-            touch.y = Gdx.input.getY(); 
+            touch.x = Gdx.input.getX();
+            touch.y = Gdx.input.getY();
             camera.unproject(touch);
 
             if (touch.x > 0 && touch.x < Dictionary.Dimensions.VIRTUAL_WIDTH && touch.y > boardOffset && touch.y < boardOffset + boardHeight) {
-                int row = (int) ((touch.y - boardOffset) / tileSize); 
+                int row = (int) ((touch.y - boardOffset) / tileSize);
                 int col = (int) (touch.x / tileSize);
 
                 if (tiles[row][col].isBrighter()) {
-                    success++;
+                    diamondsCount++;
                     stopTimer = true;
 
-                    if ((success & (step - 1)) == 0) { 
-                        numRows++; 
-                        numCols++; 
+                    if ((diamondsCount & (step - 1)) == 0) {
+                        numRows++;
+                        numCols++;
                     }
 
-                    switch (success) {
+                    switch (diamondsCount) {
                         case 4:
                             normalLevel--;
                             lightLevel--;
@@ -153,25 +181,26 @@ public class PlayState extends BaseState {
                             break;
                     }
 
-                    
+
                     if (numRows >= maxElements || numCols >= maxElements) {
-                        numRows = numCols = maxElements; 
+                        numRows = numCols = maxElements;
                     }
 
-                    levelTime = 7; 
+                    levelTime = 7;
+                    diamondsLabel.setText(String.valueOf(diamondsCount));
                 } else {
-                    fail++;
+                    failsCount++;
+                    failLabel.setText(String.valueOf(failsCount));
                     stopTimer = true;
                 }
-                createBoard(numRows, numCols); 
+                createBoard(numRows, numCols);
                 colorBoard(numRows, numCols);
             }
         }
     }
 
     private void done() {
-        ScoreState scoreState = new ScoreState(mGSM);
-        scoreState.setCurrentScore(success);
+        ScoreState scoreState = new ScoreState(mGSM, diamondsCount);
         mGSM.set(scoreState);
         tiles = null;
     }
@@ -186,10 +215,16 @@ public class PlayState extends BaseState {
         super.update(dt);
         handleUserActions();
 
-        if (levelTime <= 0 || fail > 3) {
+        if (levelTime <= 0 || failsCount > 3) {
             done();
         }
 
+        timerLabel.setText(Dictionary.Labels.TIMER + String.valueOf(levelTime));
+        if (levelTime <= 3) {
+            timerLabel.setColor(Util.hexToRGBA("#c62828FF")); // Ustaw kolor etykiety licznika na czerwony.
+        } else {
+            timerLabel.setColor(Color.WHITE);
+        }
     }
 
     @Override
